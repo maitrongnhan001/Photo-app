@@ -5,24 +5,39 @@ import { Formik, Form, FastField } from 'formik';
 import React from 'react';
 import { FormGroup, Button } from 'reactstrap';
 import { PHOTO_CATEGORY_OPTIONS } from '../../../../constants/global';
+import * as yup from 'yup';
 
 
 const PhotoForm = () => {
     const initialValues = {
         title: '',
-        category: null
+        category: null,
+        photo: '',
     }
+
+    const validationSchema = yup.object().shape({
+        title: yup.string().required('This field is required'),
+
+        category: yup.number().required().nullable(),
+
+        photo: yup.string().when('category', {
+            is: 1,
+            then: yup.string().required('This field is required'),
+            otherwise: yup.string().notRequired()
+        })
+    });
 
 
     return (
         <Formik 
             initialValues={initialValues}
+            validationSchema={validationSchema}
             onSubmit={values => console.log('Submit: ', values)}
         >
             {formikProps => {
                 //do something here ...
-                const { values } = formikProps;
-
+                const { errors } = formikProps;
+                console.log(errors);
                 return (
                     <Form>
                         <FastField
