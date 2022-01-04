@@ -1,11 +1,10 @@
 import InputField from 'custom-fields/input-field/input-field';
+import RandomPhotoField from 'custom-fields/random-photo-field/random-photo-field';
 import SelectField from 'custom-fields/select-field/select-field';
 import { Formik, Form, FastField } from 'formik';
 import React from 'react';
-import Select from 'react-select';
-import { FormGroup, Label, Button } from 'reactstrap';
+import { FormGroup, Button } from 'reactstrap';
 import { PHOTO_CATEGORY_OPTIONS } from '../../../../constants/global';
-import Images from '../../../../constants/images';
 
 
 const PhotoForm = () => {
@@ -16,11 +15,13 @@ const PhotoForm = () => {
 
 
     return (
-        <Formik initialValues={initialValues} >
+        <Formik 
+            initialValues={initialValues}
+            onSubmit={values => console.log('Submit: ', values)}
+        >
             {formikProps => {
                 //do something here ...
                 const { values } = formikProps;
-                console.log(values);
 
                 return (
                     <Form>
@@ -40,31 +41,15 @@ const PhotoForm = () => {
                             placeholder="What your photo category?"
                             options={PHOTO_CATEGORY_OPTIONS}
                         ></FastField>
-                        <FormGroup>
-                            <Label for='categoryId' >Category</Label>
-                            <Select
-                                id="categoryId"
-                                name="category"
 
-                                placeholder="What your photo category?"
-                                options={PHOTO_CATEGORY_OPTIONS}
-                            />
-                        </FormGroup>
+                        <FastField
+                            name='photo'
+                            component={RandomPhotoField}
+                            label='Photo'
+                        ></FastField>
 
                         <FormGroup>
-                            <Label for="categogyId">Photo</Label>
-
-                            <div>
-                                <Button type="button" outline color="primary">Random a photo</Button>
-                            </div>
-
-                            <div>
-                                <img width="200px" height="200px" src={Images.COLORFUL_BG} alt="colorful_bg" />
-                            </div>
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Button color="primary">Add to album</Button>
+                            <Button type='submit' color="primary">Add to album</Button>
                         </FormGroup>
                     </Form>
                 );
