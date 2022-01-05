@@ -8,12 +8,8 @@ import { PHOTO_CATEGORY_OPTIONS } from '../../../../constants/global';
 import * as yup from 'yup';
 
 
-const PhotoForm = () => {
-    const initialValues = {
-        title: '',
-        category: null,
-        photo: '',
-    }
+const PhotoForm = (props) => {
+    const { initialValues, isAddMode } = props;
 
     const validationSchema = yup.object().shape({
         title: yup.string().required('This field is required'),
@@ -32,17 +28,16 @@ const PhotoForm = () => {
         <Formik 
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={values => console.log('Submit: ', values)}
+            onSubmit={props.onSubmit}
         >
             {formikProps => {
                 //do something here ...
-                const { errors } = formikProps;
-                console.log(errors);
                 return (
                     <Form>
                         <FastField
                             name='title'
                             component={InputField}
+                            value={initialValues.title}
 
                             label='Title'
                             placeholder='Eg: beautifull pictrue ...'
@@ -51,6 +46,7 @@ const PhotoForm = () => {
                         <FastField
                             name='category'
                             component={SelectField}
+                            value={initialValues.category}
 
                             label='Category'
                             placeholder="What your photo category?"
@@ -64,7 +60,7 @@ const PhotoForm = () => {
                         ></FastField>
 
                         <FormGroup>
-                            <Button type='submit' color="primary">Add to album</Button>
+                            <Button type='submit' color={ isAddMode ? 'primary' : 'success' }>Add to album</Button>
                         </FormGroup>
                     </Form>
                 );

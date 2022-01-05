@@ -15,7 +15,7 @@ function App() {
       <Suspense fallback={<div>Loading ...</div>}>
         <BrowserRouter>
           <Header></Header>
-
+          
           <Routes>
             <Route exact path='/' element={<Navigate to='/photos'/>}/>
             <Route path='/photos/*' element={<Photo/>}/>
