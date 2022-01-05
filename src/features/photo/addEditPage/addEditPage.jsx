@@ -48,6 +48,7 @@ const Addeditpage = () => {
             <div className='photo-edit__form'>
                 <PhotoForm
                 initialValues={initialValues}
+                isAddMode={isAddMode}
                 onSubmit={handleSubmit}
                 ></PhotoForm>
             </div>

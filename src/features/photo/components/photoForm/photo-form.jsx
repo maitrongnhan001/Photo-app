@@ -9,7 +9,7 @@ import * as yup from 'yup';
 
 
 const PhotoForm = (props) => {
-    const { initialValues } = props;
+    const { initialValues, isAddMode } = props;
 
     const validationSchema = yup.object().shape({
         title: yup.string().required('This field is required'),
@@ -60,7 +60,7 @@ const PhotoForm = (props) => {
                         ></FastField>
 
                         <FormGroup>
-                            <Button type='submit' color="primary">Add to album</Button>
+                            <Button type='submit' color={ isAddMode ? 'primary' : 'success' }>Add to album</Button>
                         </FormGroup>
                     </Form>
                 );
